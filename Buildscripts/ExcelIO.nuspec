@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ExcelIO</id>
+    <version>0.6</version>
+    <authors>Jarle Nygård</authors>
+    <owners>Jarle Nygård</owners>
+    <projectUrl>http://excelio.wordpress.com/</projectUrl>
+    <iconUrl>https://excelio.files.wordpress.com/2012/04/cow.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Make it easier to read/write Excel files</description>
+    <tags>Excel</tags>
+    <dependencies>
+      <dependency id="EPPlus" version="3.0.0.2" />
+    </dependencies>
+  </metadata>
+</package>

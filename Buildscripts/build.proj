@@ -1,0 +1,43 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="default">
+  <PropertyGroup>
+    <BaseDir>$(MSBuildProjectDirectory)\..</BaseDir>
+    <Configuration Condition="'$(Configuration)'==''" >Release</Configuration>
+    <BuildDir>$(BaseDir)\build</BuildDir>
+    <OutputDir>$(BuildDir)\$(Configuration)</OutputDir>
+    <PackageDir>$(BuildDir)\Packages</PackageDir>
+    <SolutionFile>$(BaseDir)\src\ExcelIO.sln</SolutionFile>
+    <MSBuildExtensions>$(BaseDir)\lib\msbuild\msbuild.community.tasks.dll</MSBuildExtensions>
+  </PropertyGroup>
+  <UsingTask AssemblyFile="$(MSBuildExtensions)" TaskName="MSBuild.Community.Tasks.XmlUpdate" />
+
+  <Target Name="default" DependsOnTargets="Compile; PackageNuPack" />
+
+  <Target Name="Compile">
+    <MSBuild Projects="$(SolutionFile)" Properties="Configuration=$(Configuration)"  />
+  </Target>
+  
+  <Target Name="PackageNuPack" DependsOnTargets="Deploy">
+    <!-- First copy the nuspec template files to the package dir -->
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\ExcelIO.nuspec" DestinationFolder="$(PackageDir)\temp\ExcelIO" />
+
+    <!-- Copy the source files to the package dir -->
+    <Copy SourceFiles="@(MainBinaries)" DestinationFolder="$(PackageDir)\temp\ExcelIO\lib\Net40\%(RecursiveDir)" />
+
+    <!-- Get the version number of the main FV assembly to insert into the nuspec files -->
+    <GetAssemblyIdentity AssemblyFiles="$(OutputDir)\ExcelIO\ExcelIO.dll">
+      <Output TaskParameter="Assemblies" ItemName="AsmInfo" />
+    </GetAssemblyIdentity>
+
+    <!-- insert the version number into the nuspec files -->
+    <XmlUpdate
+		  Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+			XmlFileName="$(PackageDir)\temp\ExcelIO\ExcelIO.nuspec"
+			XPath="/package/metadata/version"
+			Value="%(AsmInfo.Version)" />
+
+    <Exec WorkingDirectory="$(BuildDir)\Packages"
+					Command="$(BaseDir)\lib\nuget\nuget.exe pack $(PackageDir)\temp\ExcelIO\ExcelIO.nuspec" />
+
+    <RemoveDir Directories="$(PackageDir)\temp" />
+  </Target>
+</Project>
