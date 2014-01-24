@@ -94,7 +94,7 @@ namespace Tests
                         Col2 = row.GetValue<string>(2),
                         Col3 = row.GetValue<DateTime>(3)
                     };
-                });
+                }, 1);
                 List<SimpleExcelRow> actualRowsList = new List<SimpleExcelRow>();
                 actualRowsList.AddRange(actualRows);
 

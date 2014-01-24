@@ -119,16 +119,16 @@ namespace Tests
 
         /// <summary>
         ///A test for IsDateTimeProperty
-        ///</summary>
-        [TestMethod()]
-        public void IsDateTimePropertyTest()
-        {
-            PropertyInfo propertyInfo = typeof(ExtensionClass).GetProperty("OneProp");
-            bool expected = true;
-            bool actual;
-            actual = Extensions_Accessor.IsDateTimeProperty(propertyInfo);
-            Assert.AreEqual(expected, actual);
-        }
+        /////</summary>
+        //[TestMethod()]
+        //public void IsDateTimePropertyTest()
+        //{
+        //    PropertyInfo propertyInfo = typeof(ExtensionClass).GetProperty("OneProp");
+        //    bool expected = true;
+        //    bool actual;
+        //    actual = Extensions_Accessor.IsDateTimeProperty(propertyInfo);
+        //    Assert.AreEqual(expected, actual);
+        //}
     }
 
     class ExtensionClass
