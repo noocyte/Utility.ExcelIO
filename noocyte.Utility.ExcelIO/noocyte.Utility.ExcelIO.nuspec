@@ -16,7 +16,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\bin\noocyte.Utility.ExcelIO.dll" target="lib\net45" />
-    <file src="..\..\bin\noocyte.Utility.ExcelIO.pdb" target="lib\net45" />
+    <file src="..\..\bin\Release\noocyte.Utility.ExcelIO.dll" target="lib\net451" />
+    <file src="..\..\bin\Release\noocyte.Utility.ExcelIO.pdb" target="lib\net451" />
   </files>
 </package>
