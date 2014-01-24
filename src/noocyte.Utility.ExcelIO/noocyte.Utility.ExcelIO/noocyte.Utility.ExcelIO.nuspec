@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ExcelIO</id>
+    <version>2.0</version>
+    <authors>Jarle Nygård, Anders Østhus, Alessandro Di Gioia</authors>
+    <owners>Proactima Solutions AS</owners>
+    <licenseUrl>https://raw.github.com/proactima/AzureWorkers/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/proactima/Utility.ExcelIO</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Blah</description>
+    <releaseNotes>Blah</releaseNotes>
+    <copyright>Copyright © Proactima Solutions AS - 2013</copyright>
+    <dependencies>
+      <dependency id="EPPlus" version="3.0" />
+    </dependencies>
+  </metadata>
+</package>
