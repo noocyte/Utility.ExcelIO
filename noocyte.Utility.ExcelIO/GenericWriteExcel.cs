@@ -11,13 +11,15 @@ namespace noocyte.Utility.ExcelIO
     {
         public MemoryStream CreateExcelFile<T>(IEnumerable<T> rows) where T : class
         {
-            MemoryStream stream = null;
-            stream = new MemoryStream();
-            using (ExcelPackage package = new ExcelPackage(stream))
+            var stream = new MemoryStream();
+            var enumerable = rows as IList<T> ?? rows.ToList();
+
+            using (var package = new ExcelPackage(stream))
             {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Sheet1");
-                WriteHeader(worksheet, rows.First());
-                WriteContent(worksheet, rows);
+                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                WriteHeader<T>(worksheet);
+                WriteContent(worksheet, enumerable);
                 FormatSheet(worksheet);
 
                 package.Save();
@@ -25,10 +27,11 @@ namespace noocyte.Utility.ExcelIO
             return stream;
         }
 
-        private void FormatSheet(ExcelWorksheet worksheet)
+        private static void FormatSheet(ExcelWorksheet worksheet)
         {
             // calculate range with data
-            string headerAddress = String.Format("{0}:{1}", worksheet.Dimension.Start.Address, worksheet.Dimension.End.Address);
+            var headerAddress = String.Format("{0}:{1}", worksheet.Dimension.Start.Address,
+                worksheet.Dimension.End.Address);
 
             // mark data as a table and format as Light 9 style (config?)
             var tbl = worksheet.Tables.Add(new ExcelAddress(headerAddress), "BaseData");
@@ -38,11 +41,11 @@ namespace noocyte.Utility.ExcelIO
             worksheet.Cells[headerAddress].AutoFitColumns();
         }
 
-        private void WriteHeader<T>(ExcelWorksheet worksheet, T oneRow) where T : class
+        private static void WriteHeader<T>(ExcelWorksheet worksheet) where T : class
         {
-            int beginRow = worksheet.Dimension == null ? 1 : worksheet.Dimension.End.Row;
+            var beginRow = worksheet.Dimension == null ? 1 : worksheet.Dimension.End.Row;
 
-            int i = 0;
+            var i = 0;
             foreach (var header in HeaderGenerator<T>.GenerateHeaders())
             {
                 i++;
@@ -50,14 +53,13 @@ namespace noocyte.Utility.ExcelIO
             }
         }
 
-        private void WriteContent<T>(ExcelWorksheet worksheet, IEnumerable<T> rows) where T : class
+        private static void WriteContent<T>(ExcelWorksheet worksheet, IEnumerable<T> rows) where T : class
         {
-            int columnCount = 0;
-            int rowCount = worksheet.Dimension.End.Row;
+            var rowCount = worksheet.Dimension.End.Row;
             foreach (var rule in rows)
             {
                 rowCount++;
-                columnCount = 0;
+                var columnCount = 0;
                 foreach (var columnValue in rule.GetPropertyValues())
                 {
                     columnCount++;

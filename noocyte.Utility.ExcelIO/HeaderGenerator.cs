@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
 
 namespace noocyte.Utility.ExcelIO
 {
-
     internal class ExcelHeader
     {
         public string Text { get; set; }
@@ -15,22 +13,20 @@ namespace noocyte.Utility.ExcelIO
     {
         public static IEnumerable<ExcelHeader> GenerateHeaders()
         {
-            PropertyInfo[] propertyInfos = typeof(T).GetProperties();
+            var propertyInfos = typeof (T).GetProperties();
 
-            foreach (PropertyInfo propertyInfo in propertyInfos)
+            foreach (var propertyInfo in propertyInfos)
             {
                 var displayNameAttribute = propertyInfo.GetAttribute<DisplayNameAttribute>(false);
                 var hasIgnoreAttribute = propertyInfo.GetAttribute<IgnoreForExportAttribute>(false);
 
-                bool display = true;
-                if (hasIgnoreAttribute != null)
-                    display = false;
+                var display = hasIgnoreAttribute == null;
 
-                string displayName = propertyInfo.Name;
+                var displayName = propertyInfo.Name;
                 if (displayNameAttribute != null)
                     displayName = displayNameAttribute.DisplayName;
 
-                yield return new ExcelHeader()
+                yield return new ExcelHeader
                 {
                     Text = displayName,
                     Display = display

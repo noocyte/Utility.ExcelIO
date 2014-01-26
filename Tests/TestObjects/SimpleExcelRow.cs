@@ -7,9 +7,11 @@ namespace Tests.TestObjects
     {
         internal static List<SimpleExcelRow> CreateSimpleRows()
         {
-            var list = new List<SimpleExcelRow>();
-            list.Add(new SimpleExcelRow() { Col1 = 1, Col2 = "A", Col3 = new DateTime(2012, 12, 12) });
-            list.Add(new SimpleExcelRow() { Col1 = 2, Col2 = "B", Col3 = new DateTime(2012, 12, 12) });
+            var list = new List<SimpleExcelRow>
+            {
+                new SimpleExcelRow {Col1 = 1, Col2 = "A", Col3 = new DateTime(2012, 12, 12)},
+                new SimpleExcelRow {Col1 = 2, Col2 = "B", Col3 = new DateTime(2012, 12, 12)}
+            };
 
             return list;
         }
@@ -22,5 +24,4 @@ namespace Tests.TestObjects
         public string Col2 { get; set; }
         public DateTime Col3 { get; set; }
     }
-
 }
