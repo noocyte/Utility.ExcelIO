@@ -11,6 +11,7 @@ namespace Tests
     [TestFixture]
     public class GenericWriteExcelTest
     {
+        [Ignore]
         [Test]
         public void CreateExcelFileTest()
         {
@@ -27,7 +28,7 @@ namespace Tests
             using (var file = File.OpenRead(filename))
             {
                 var excel = new GenericReadExcel {HasHeader = true};
-                var actualRows = excel.ExtractRows(file, row => new SimpleExcelRow
+                var actualRows = excel.ExtractRows(file, (header, row) => new SimpleExcelRow
                 {
                     Col1 = row.GetValue<int>(1),
                     Col2 = row.GetValue<string>(2),
