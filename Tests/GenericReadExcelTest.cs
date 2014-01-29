@@ -15,7 +15,7 @@ namespace Tests
         {
             var target = new GenericReadExcel {HasHeader = true};
             const string sheetName = "Sheet1";
-            Func<ExcelWorksheetRow, SimpleExcelRow> rowFunction = ReadOneRow;
+            Func<Dictionary<int, string>, ExcelWorksheetRow, SimpleExcelRow> rowFunction = ReadOneRow;
             var expected = SimpleExcelRowFactory.CreateSimpleRows();
             var actual = new List<SimpleExcelRow>();
 
@@ -37,20 +37,19 @@ namespace Tests
             using (Stream stream = new FileStream("SimpleBook.xlsx", FileMode.Open))
             {
                 excelRows.AddRange(target.ExtractRows(stream,
-                    row => new SimpleExcelRow
+                    (header,row) => new SimpleExcelRow
                     {
                         Col1 = row.GetValue<int>(1),
                         Col2 = row.GetValue<string>(2),
                         Col3 = row.GetValue<DateTime>(3)
-                    },
-                    sheetNumber: 1));
+                    }, 1));
             }
 
             AssertEx.PropertyValuesAreEquals(excelRows, expected);
         }
 
 
-        private static SimpleExcelRow ReadOneRow(ExcelWorksheetRow row)
+        private static SimpleExcelRow ReadOneRow(Dictionary<int, string> header, ExcelWorksheetRow row)
         {
             return new SimpleExcelRow
             {

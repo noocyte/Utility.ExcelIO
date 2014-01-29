@@ -12,7 +12,7 @@ namespace noocyte.Utility.ExcelIO
 
         public bool ExtractHeader { get; set; }
 
-        public IDictionary<string, IEnumerable<T>> ExtractRows<T>(Stream stream, Func<ExcelWorksheetRow, T> rowFunction)
+        public IDictionary<string, IEnumerable<T>> ExtractRows<T>(Stream stream, Func<Dictionary<int, string>, ExcelWorksheetRow, T> rowFunction)
         {
             using (var package = new ExcelPackage(stream))
             {
@@ -21,7 +21,7 @@ namespace noocyte.Utility.ExcelIO
             }
         }
 
-        public IEnumerable<T> ExtractRows<T>(Stream stream, Func<ExcelWorksheetRow, T> rowFunction, string sheetName)
+        public IEnumerable<T> ExtractRows<T>(Stream stream, Func<Dictionary<int, string>, ExcelWorksheetRow, T> rowFunction, string sheetName)
         {
             using (var package = new ExcelPackage(stream))
             {
@@ -30,8 +30,8 @@ namespace noocyte.Utility.ExcelIO
             }
         }
 
-// ReSharper disable once MethodOverloadWithOptionalParameter
-        public IEnumerable<T> ExtractRows<T>(Stream stream, Func<ExcelWorksheetRow, T> rowFunction, int sheetNumber = 1)
+        // ReSharper disable once MethodOverloadWithOptionalParameter
+        public IEnumerable<T> ExtractRows<T>(Stream stream, Func<Dictionary<int, string>, ExcelWorksheetRow, T> rowFunction, int sheetNumber = 1)
         {
             using (var package = new ExcelPackage(stream))
             {
@@ -40,17 +40,28 @@ namespace noocyte.Utility.ExcelIO
             }
         }
 
-        private IEnumerable<T> IterateOverRows<T>(ExcelWorksheet worksheet, Func<ExcelWorksheetRow, T> rowFunction)
+        private IEnumerable<T> IterateOverRows<T>(ExcelWorksheet worksheet, Func<Dictionary<int, string>, ExcelWorksheetRow, T> rowFunction)
         {
             var beginRow = 1;
-            if (HasHeader && !ExtractHeader)
-                beginRow = 2;
+            var headerValues = new Dictionary<int, string>();
+
+            if (HasHeader)
+            {
+                var rowRange = worksheet.Cells[1, 1];
+                var row = new ExcelWorksheetRow(rowRange);
+
+                for (var i = 1; i <= worksheet.Dimension.End.Column; i++)
+                    headerValues[i] = row.GetValue<string>(i);
+
+                if (!ExtractHeader)
+                    beginRow = 2;
+            }
 
             for (var i = beginRow; i <= worksheet.Dimension.End.Row; i++)
             {
                 var rowRange = worksheet.Cells[i, 1];
                 var row = new ExcelWorksheetRow(rowRange);
-                yield return rowFunction(row);
+                yield return rowFunction(headerValues, row);
             }
         }
     }
