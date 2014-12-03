@@ -13,7 +13,7 @@ namespace noocyte.Utility.ExcelIO
         {
             MemoryStream stream = null;
             stream = new MemoryStream();
-	        var outputStream = new MemoryStream();
+            var outputStream = new MemoryStream();
             using (ExcelPackage package = new ExcelPackage(stream))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Sheet1");

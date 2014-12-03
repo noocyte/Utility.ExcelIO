@@ -13,10 +13,10 @@ namespace noocyte.Utility.ExcelIO
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[sheetName];
 
-				foreach (var row in IterateOverRows(worksheet, rowFunction))
-				{
-					yield return row;
-				}
+                foreach (var row in IterateOverRows(worksheet, rowFunction))
+                {
+                    yield return row;
+                }
             }
         }
 
@@ -26,10 +26,10 @@ namespace noocyte.Utility.ExcelIO
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[sheetNumber];
 
-				foreach (var row in IterateOverRows(worksheet, rowFunction))
-	            {
-		            yield return row;
-	            }
+                foreach (var row in IterateOverRows(worksheet, rowFunction))
+                {
+                    yield return row;
+                }
             }
         }
 
