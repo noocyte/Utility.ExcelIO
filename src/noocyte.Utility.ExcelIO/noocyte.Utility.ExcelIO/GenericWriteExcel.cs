@@ -21,9 +21,9 @@ namespace noocyte.Utility.ExcelIO
                 WriteContent(worksheet, rows);
                 FormatSheet(worksheet);
 
-				package.SaveAs(outputStream);
+                package.SaveAs(outputStream);
             }
-			return outputStream;
+            return outputStream;
         }
 
         private void FormatSheet(ExcelWorksheet worksheet)
