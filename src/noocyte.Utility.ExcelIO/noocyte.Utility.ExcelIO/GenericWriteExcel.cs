@@ -13,6 +13,7 @@ namespace noocyte.Utility.ExcelIO
         {
             MemoryStream stream = null;
             stream = new MemoryStream();
+	        var outputStream = new MemoryStream();
             using (ExcelPackage package = new ExcelPackage(stream))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Sheet1");
@@ -20,9 +21,9 @@ namespace noocyte.Utility.ExcelIO
                 WriteContent(worksheet, rows);
                 FormatSheet(worksheet);
 
-                package.Save();
+				package.SaveAs(outputStream);
             }
-            return stream;
+			return outputStream;
         }
 
         private void FormatSheet(ExcelWorksheet worksheet)
