@@ -11,7 +11,7 @@
     <description>Make it easier to read/write Excel files</description>
     <tags>Excel</tags>
     <dependencies>
-      <dependency id="EPPlus" version="3.0.0.2" />
+      <dependency id="EPPlus" version="4.0.1.1" />
     </dependencies>
   </metadata>
 </package>
