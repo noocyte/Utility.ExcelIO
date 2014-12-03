@@ -12,7 +12,11 @@ namespace noocyte.Utility.ExcelIO
             using (ExcelPackage package = new ExcelPackage(stream))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[sheetName];
-                return IterateOverRows(worksheet, rowFunction);
+
+                foreach (var row in IterateOverRows(worksheet, rowFunction))
+                {
+                    yield return row;
+                }
             }
         }
 
@@ -21,7 +25,11 @@ namespace noocyte.Utility.ExcelIO
             using (ExcelPackage package = new ExcelPackage(stream))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[sheetNumber];
-                return IterateOverRows(worksheet, rowFunction);
+
+                foreach (var row in IterateOverRows(worksheet, rowFunction))
+                {
+                    yield return row;
+                }
             }
         }
 
