@@ -26,7 +26,7 @@ namespace noocyte.Utility.ExcelIO
             using (var package = new ExcelPackage(stream))
             {
                 var worksheet = package.Workbook.Worksheets[sheetName];
-                return IterateOverRows(worksheet, rowFunction);
+                return IterateOverRows(worksheet, rowFunction).ToList();
             }
         }
 
@@ -36,7 +36,7 @@ namespace noocyte.Utility.ExcelIO
             using (var package = new ExcelPackage(stream))
             {
                 var worksheet = package.Workbook.Worksheets[sheetNumber];
-                return IterateOverRows(worksheet, rowFunction);
+                return IterateOverRows(worksheet, rowFunction).ToList();
             }
         }
 
