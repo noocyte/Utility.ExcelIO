@@ -12,7 +12,7 @@
     <releaseNotes>Blah</releaseNotes>
     <copyright>Copyright © Proactima Solutions AS - 2013</copyright>
     <dependencies>
-      <dependency id="EPPlus" version="3.1" />
+      <dependency id="EPPlus" version="4.0" />
     </dependencies>
   </metadata>
   <files>

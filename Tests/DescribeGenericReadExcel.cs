@@ -81,7 +81,6 @@ namespace Tests
             AssertEx.PropertyValuesAreEquals(excelRows, expected);
         }
 
-
         private static SimpleExcelRow ReadOneRow(Dictionary<int, string> header, ExcelWorksheetRow row)
         {
             return new SimpleExcelRow

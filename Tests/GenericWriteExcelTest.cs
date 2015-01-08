@@ -11,7 +11,6 @@ namespace Tests
     [TestFixture]
     public class GenericWriteExcelTest
     {
-        [Ignore]
         [Test]
         public void CreateExcelFileTest()
         {
@@ -22,7 +21,7 @@ namespace Tests
             var actual = target.CreateExcelFile(rows);
             using (var file = File.OpenWrite(filename))
             {
-                file.Write(actual.GetBuffer(), 0, (int) actual.Position);
+                file.Write(actual.GetBuffer(), 0, (int) actual.Length);
             }
 
             using (var file = File.OpenRead(filename))
