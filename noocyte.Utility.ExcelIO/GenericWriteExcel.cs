@@ -12,6 +12,7 @@ namespace noocyte.Utility.ExcelIO
         public MemoryStream CreateExcelFile<T>(IEnumerable<T> rows) where T : class
         {
             var stream = new MemoryStream();
+            var outputStream = new MemoryStream();
             var enumerable = rows as IList<T> ?? rows.ToList();
 
             using (var package = new ExcelPackage(stream))
@@ -22,9 +23,9 @@ namespace noocyte.Utility.ExcelIO
                 WriteContent(worksheet, enumerable);
                 FormatSheet(worksheet);
 
-                package.Save();
+                package.SaveAs(outputStream);
             }
-            return stream;
+            return outputStream;
         }
 
         private static void FormatSheet(ExcelWorksheet worksheet)
